@@ -67,9 +67,10 @@ b.PHP 中变量可以直接在写出变量名后直接使用，而不需要 js �
 c.*php 中变量之间的赋值总是【赋值传递】，如果必须【地址传递】则需要使用&符号
 d.PHP 中变量的作用域采用函数级作用域(暂时)。
 例子：
-(`) 
-$var = 'frank'; $Var = 'iwen'; echo "$var,$Var"; // 输出"frank,iwen" 
-(`)
+(```) 
+$var = 'frank'; $Var = 'iwen';
+echo "$var,$Var"; // 输出"frank,iwen" 
+(```)
 
 ---
 
