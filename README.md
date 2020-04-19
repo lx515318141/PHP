@@ -264,5 +264,146 @@ foreach(array_expression as $value){ statement }
 或者  
 foreach(array_expression as $key=>$value){ statement }  
 注意：  
-a.第一种格式遍历给定的array_expression数组。每次循环中，当前
+a.第一种格式遍历给定的array_expression数组。每次循环中，当前单元的值被赋给$value并且数组内部的指针向前移一步(因此下一次循环中将会得到下一个单元)。  
+b.第二种格式做同样的事，只除了当前单元的键名也会在每次循环中被赋给变量$key。  
 例子：  
+```
+$arr=[1,2,3,4,5];
+foreach($arr as $index => $value){
+      each '$arr['.$index.']:'.$value."<br>"
+}
+```
+
+#### (2).include与require
+
+描述：include和require语句都表示包含并运行指定文件。但未找到文件include会发出一条警告，后者会发出一个致命错误。  
+语法：  
+include''文件名|文件路径';  
+注意：  
+a.当一个文件被包含时，其中所包含的代码继承了include所在行的变量范围。从该处开始，调用文件在该行处可用的任何变量在被调用的文件中也都可用。  
+b.不过所有在包含文件中定义的函数和类都具有全局作用域。  
+例子：  
+```  
+vars.php
+<?php
+      $color = 'green';
+      $fruit = 'apple';
+?>
+
+test.php
+<?php
+      echo "A $color $fruit"  //A
+      include 'vars.php';
+      echo "A $color $fruit"  //A green apple
+?>
+```
+
+### 6.php函数
+
+php中的函数结构和js中的函数结构基本持有相同的语法结构和特征。  
+例如：  
+函数的声明语法由function命令声明，  
+函数参数写在小括号内部，  
+函数返回值在函数内部采用return关键词声明，  
+函数可以先使用后声明  
+函数内部返回的函数(闭包)  
+php中的作用域也采用函数级别，因此函数内部的变量无法在函数外部直接访问。  
+……  
+但php中函数的作用域部分与js中的函数还是存在一些区别的。  
+例如：
+在函数外部定义的全局变量并不能在函数内部直接使用，而是需要通过关键词global在函数内部再次声明才可以。
+例如：  
+```
+$num = 100;             // 设置全局变量$num
+function Fun(){
+      global $num;      // 在函数内部声明$num文件全局变量，否则调用出错
+      echo $num;        // 对全局变量做出修改
+      $num++;
+}
+Fun();
+echo $num;              // 在函数外部再次输出$num,得出结果101
+```
+
+通过上面的例子得出：  
+在php的函数中如果想要使用哪怕是全局变量，也必须采用关键词global声明一次。否则无法生效。
+
+### 6.php类和对象
+
+php中和js不同，php内对于类和对象是有准确的定义和关键词声明的。  
+因此暂时撇开目前类和对象所保留的认知，先看看在php中类和对象是如何规定的。  
+先从以下几个角度来讨论一下php中的类和对象：  
+(1)php中的类
+(2)php中的对象
+(3)php中类的属性与属性类型关键词
+(4)php中的类常量与静态常量
+(5)php中类的构造函数
+(6)php中的继承
+
+#### (1).php中的类  
+
+描述：php中类的定义都以关键字class开头，后跟类名，再后面，再后面跟着一对花括号。括号内包含有类的属性与方法的定义。  
+语法：class类名{ 类内部的结构 }  
+说明：  
+a.类名可以是任何非PHP保留字的合法标签。一个合法类名以字母或下划线开头，后面跟着若干字母，数字或下划线。  
+b.一个类可以包含属于自己的常量，变量【属性】以及函数【即方法】。  
+例子：  
+```
+class Peo{
+      public $peoName = 'prople name';    // publics是一个关键词，稍后再说  
+      function showSelf(){
+            echo 'hello world!';
+      }
+}
+```
+
+#### (2).php中的对象
+
+描述：要创建一个类的实例，必须使用new关键字。类应在被实例化之前定义。  
+语法：$对象名 = new 类名();  
+说明：  
+a.对于创建对象的语句中，new后面的类名后有没有小括号都可以。  
+b.对象与对象之间的传值仍然是赋值传递，只不过传递的内容是一个内存地址。  
+例子：  
+```
+class Peo{
+      public $peoName = 'prople name';  
+      function showSelf(){
+            echo 'hello world!';
+      }
+}
+$lix = new Peo;   // Peo Object([peoName] => people name)
+print_r($lix;)
+```
+
+#### (3).php中类的属性与属性类型关键词
+
+描述：类内部的变量成员称为属性，或字段、特征。  
+语法：由关键字public，protected或者private开头，然后跟一个普通的变量声明来组成。  
+class 类名{  
+      属性关键词$变量名(属性名)=属性值;  
+      属性关键词function方法名(参数1，参数2，……){ 方法内容代码; }  
+}  
+说明：  
+a.属性中的变量可以初始化，但初始化的值必须是整数。  
+b.类的属性和方法如果没有写明类型关键词，则都默认是公有地  
+public：被定义为公有的类成员可以在任何地方被访问。  
+protected：被定义为受保护的类成员则可以被其自身以及子类和父类访问。  
+private：被定义为私有的类成员则只能被其定义所在的类访问。  
+c.在类的成员方法中，可以用->来访问非静态属性，其中->称为对象运算符  
+例子：  
+```
+class Peo{
+      public $peoName = 'prople name';          // 声明公共属性  
+      private function showSelf(){              // 声明私有方法
+            echo 'hello world!';
+      }
+      public function canUsedFun(){             // 声明公共方法
+            $this->showSelf()                   // $this是一个伪对象，表示当前正在调用这个方法的对象
+      }
+}
+$frank = new Peo();                             // 实例化一个Peo类的对象
+echo $lix->peoName;                             // 通过->访问对象的公有属性
+$lix->proName = 'LIX';                          // 修改对象的公有属性
+echo $lix->peoName;
+$beixi->canUsedFun();                           // 调用对象的公有方法，间接执行私有方法
+```
