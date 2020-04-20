@@ -69,10 +69,10 @@ b.PHP 中变量可以直接在写出变量名后直接使用，而不需要 js �
 c.*php 中变量之间的赋值总是【赋值传递】，如果必须【地址传递】则需要使用&符号  
 d.PHP 中变量的作用域采用函数级作用域(暂时)。  
 例子：  
-(```)  
+```  
 $var = 'frank'; $Var = 'iwen';  
 echo "$var,$Var"; // 输出"frank,iwen"  
-(```)
+```
 
 ---
 
@@ -86,10 +86,10 @@ a.常量实际上可以认为是【宏定义】在 PHP 中的一个体现
 b.为了气氛变量和常量，我们约定常量在定义时均使用大写  
 c.PHP 中实际上并不是所有的常量的值都不能改变，MC(魔术变量)就能够发生改变  
 例子：  
-(```)  
+```
 define('FRANK','沃德天·辣么帅');  
 echo FRANK;  
-(```)
+```
 
 ---
 
@@ -99,10 +99,10 @@ echo FRANK;
 语法：在 PHP 中表达式无法精确的被给出一个语法来设定，但可以简单设立一个通俗的标准。那就是语句如果不加分号的部分，及时表达式。  
 注意：上面的说法并不完全准确，毕竟有一些语句是不使用分号结尾的。例如流程控制中的 if 等结构，还有函数等结构。因此上面的说法只是“简单”设立的一个标准。  
 例子：  
-(```)  
+```  
 function foo(){return 5;} // 函数表达式  
  $c = $a++ // 赋值表达式  
-(```)
+```
 
 ### 3.php 常见数据类型
 
@@ -175,11 +175,11 @@ b.php对双引号定义的字符串中的变量可以进行内容解析，而单
 c.php字符串允许多行定义，但会忽略多余的空格和换行。  
 d.php中字符串拼接采用.点运算符实现！不是！加号！！！  
 例子：  
-(```)  
+```
 $frank='张先森';  
 echo 'my name is $frank'."<br/>";  
 echo "my name is $frank";  
-(```)
+```
 
 (5)数组类型Array
 
@@ -199,11 +199,11 @@ e.php中数组内部添加原本并不存在的key值，不会补齐之间的差
    ` $arr[100]=100    // 并不会为数组添加100个元素  `
   
 例子：  
-(```)  
+``` 
 print_r($arr=['11','22','33']);  
 print_r($arr[0]);  
 $arr[100]=960  
-(```)
+```
 
 (6)对象类型Object
 
@@ -213,7 +213,7 @@ $arr[100]=960
 a.php中类由class关键字声明，类名后没有小括号。  
 b.php中类内部的方法由->箭头来调用，而不是.运算符。  
 例子：  
-(```)  
+```
 class Peo{  
       function eat(){  
           echo '我会吃饭';  
@@ -221,7 +221,7 @@ class Peo{
 }  
 $lix=new Peo;  
 print_r($lix->eat());  
-(```)  
+```  
 补充：  
 类和对象：  
 类：是一些事物具有公共特征的抽象描述。  
@@ -241,13 +241,13 @@ print_r($lix->eat());
 php中运算符和js中的运算符大同小异，因此整体上来讲可以直接按照经验进行使用。但毕竟存在差异，因此列出两个明显的运算规则区别：  
 (1)字符串的拼接符号不再是+加号运算符，而是.点运算符。  
 (2)字符串内的+=运算符也不再表示拼接，而是使用.=来进行拼接。原本的+=仅用来单纯的数学运算累加。  
-(```)  
+``` 
 $str1='123';  
 var_dump($str1+='456');   //int(579)  
 
 $str1='123';  
 var_dump($str1.='456');   //string(6)"123456"  
-(```)
+```
 
 ### 5.php流程控制语句
 
@@ -332,12 +332,12 @@ echo $num;              // 在函数外部再次输出$num,得出结果101
 php中和js不同，php内对于类和对象是有准确的定义和关键词声明的。  
 因此暂时撇开目前类和对象所保留的认知，先看看在php中类和对象是如何规定的。  
 先从以下几个角度来讨论一下php中的类和对象：  
-(1)php中的类
-(2)php中的对象
-(3)php中类的属性与属性类型关键词
-(4)php中的类常量与静态常量
-(5)php中类的构造函数
-(6)php中的继承
+(1)php中的类  
+(2)php中的对象  
+(3)php中类的属性与属性类型关键词  
+(4)php中的类常量与静态常量  
+(5)php中类的构造函数  
+(6)php中的继承  
 
 #### (1).php中的类  
 
@@ -407,3 +407,125 @@ $lix->proName = 'LIX';                          // 修改对象的公有属性
 echo $lix->peoName;
 $beixi->canUsedFun();                           // 调用对象的公有方法，间接执行私有方法
 ```
+
+#### (4).php中的类常量与静态变量
+
+描述：php中的常量和静态变量是存在于类的结构中的两个不同于常见属性的两种结构。  
+语法：类常量由关键词const声明，而静态变量则使用关键词static声明  
+class 类名{  
+      const 类常量(没有$开头)=简单值;  
+      static 静态变量名(有$开头)=简单值;  
+}  
+说明：  
+a.由const声明的类常量不允许发生任何变化，一经声明值即固定。  
+b.由static声明的静态变量的语句，则仅在类被声明的时候执行一次，但可以修改。  
+c.无论是const声明的类常量还是static声明的静态变量，两者的调用方式均为::调用。  
+d.两者在调用的时候均可以不实例化对象直接通过类名调用。  
+例子：  
+```
+class Peo{                                
+      const peoName = 'people name';      // 声明类常量
+      static $peoAge = 18;                // 声明静态变量
+}
+echo Peo::peoName;                        // 不实例化也能直接通过类名访问
+echo Peo::$peoAge;                        // 不实例化也能直接通过类名访问
+Peo::$peoAge++;                           // 修改静态变量的值
+echo Peo::$peoAge;                        // 确认修改
+$lix = new Peo();                         // 实例化对象，但静态变量声明语句不执行
+echo Peo::peoName;                        // 实例化后可通过对象访问
+echo Peo::$peoAge;                        // 输出静态变量是刚刚修改后的值
+```
+
+#### (5).php中类的构造函数
+
+描述：构造函数是类在实例化对象的时候自动执行，用来帮助类去构造对象的函数。php为所有的类都提供了一个和类名相同的隐藏构造函数。可以通过显示编写或通过_construct函数来主动进行编辑。  
+语法：  
+class 类名{  
+      // function__construct(){ 主动修改的代码 }  
+      function 类名(){ 主动修改的代码 }  
+}
+说明：两种写法的都能够实现构造函数的主动编辑，但是需要知道系统自动提供的是第二种结构。  
+例子：
+```
+class Peo{
+      public $peoName;
+      function__construct(){$this->peoName='默认值'}
+}
+$lix=new Peo();
+echo $lix->peoName;
+```
+
+#### (6).php中类的继承
+
+描述：继承有时也被称为类扩展。是指子类会继承父类所有公有的和受保护的属性方法。在php中使用extends关键词来实现继承。  
+语法：class SonClassName extends FatherClassName{  
+      子类结构  
+}  
+说明：  
+a.除非子类覆盖了父类的方法，否则被继承的方法都会保留其原有功能。  
+b.继承对于功能的设计和抽象是非常有用的，避免了重复编写大量相同的公有结构。  
+c.对于公有属性和方法的继承，子类可以直接随意使用。  
+对于受保护得到属性和方法的继承，可以在【父类或子类内部】使用。  
+对于私有的属性和方法，子类不能够继承。  
+例子：  
+```
+class Father{
+      public $pubPro = '父类公开的属性';
+      protected $protecPro = '父类受保护的属性';
+      private $priPro = '父类私有的属性';
+
+      public function fatherPublicPut(){
+            echo $this->pubPro."<br>";
+            echo $this->protecPro."<br>";
+            echo $this->priPro."<br>";
+      }
+      protected function fatherProtectPut(){
+            echo $this->pubPro."<br>";
+            echo $this->protecPro."<br>";
+            echo $this->priPro."<br>";
+      }
+      private function fatherPrivatePut(){
+            echo $this->pubPro."<br>";
+            echo $this->protecPro."<br>";
+            echo $this->priPro."<br>";
+      }
+}
+class Son extends Father{
+      public function SonSelfPut(){
+            echo $this->pubPro."<br>";
+            echo $this->protecPro."<br>";
+            echo $this->priPro."<br>";
+      }
+}
+$father = new Father();             
+echo $father->pubPro;               // 父类公开的属性
+echo $father->protecPro;            // 报错，受保护属性外部无法直接访问
+echo $father->priPro;               // 报错，私有属性外部无法直接访问
+$father->fatherPublicPut();         // 父类公开的属性、父类受保护属性、父类私有属性
+$father->fatherProtectPut();        // 报错，受保护方法外部无法直接访问
+$father->fatherPrivatePut();        // 报错，私有方法外部无法直接访问
+
+$son = new Son();
+echo $son->pubPro;                  // 父类公开的属性（继承来的）
+echo $son->protecPro;               // 报错，受保护属性外部无法直接访问
+echo $son->priPro;                  // 报错，私有属性无法继承更无法访问
+$son->fatherPublicPut();            // 父类公开的属性、父类受保护属性、父类私有属性（继承来的）
+$son->fatherProtectPut();           // 报错，受保护方法外部无法直接访问
+$son->fatherPrivatePut();           // 报错，私有方法无法继承更无法访问
+
+$son->SonSelfPut();                 // 父类公开的属性、父类受保护的属性、报错（证明继承的属性只有public和protected的属性）
+```
+
+### 8.php会话session与缓存cookie(扩展)
+
+session和cookie都会是我们在ajax请求部分详细说明的内容。但是我们有必要在这里先对其概念有一个大致的了解，这样有助于更好的理解后面部分的内容。  
+名词解释：  
+cookie指的是当访问页面的时候，由后台发往前台页面数据时所夹带的一小段信息。  
+session可以理解为一种不断验证口令以获得用户持久连接的"访问机制"。  
+原理说明：  
+当后台返回给前台数据的时候，添加的一段"持久"的信息。因此这段信息必须在php后台代码中插入添加。  
+相关技术：  
+(1)php中$_GET和$_POST对象，用于在php中获取get和post请求的数据对象。  
+(2)php中time()用于获取当前的时间戳，单位是秒。支持加减法。  
+(3)php中setcookie('key',value,过期时间);用于设置缓存。  
+(4)html中document.cookie用来获取页面所保存的cookie值。类型是字符串。  
